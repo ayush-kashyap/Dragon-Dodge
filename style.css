@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+body{
+    height: 100vh;
+    background: linear-gradient(lightblue, white);
+    background-repeat: no-repeat;
+    margin: 0;
+    overflow: hidden;
+}
+*{
+    font-family: "Work Sans", sans-serif;
+}
+.man{
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    transition: left linear 2s;
+}
+.jump{
+    animation: jump linear 1000ms;
+}
+@keyframes jump{
+    0%{
+        bottom : 50px;
+        left: 39%;
+    }
+    50%{
+        bottom :250px;
+    }
+    100%{
+        bottom : 50px;
+        left: 43%;
+    }
+}
+.dragon{
+    position: absolute;
+    height: 100px;
+    bottom: 150px;
+    left: 110vw;
+    animation: anime linear infinite 4000ms;
+}
+@keyframes anime{
+    from{
+        left: 110vw;
+    }
+    to{
+        left: -10vw;
+    }
+}
+@keyframes anime2{
+    from{
+        left: 110vw;
+    }
+    to{
+        left: -15vw;
+    }
+}
+.ground{
+    position: fixed;
+    bottom: 0;
+    left: -10%;
+    height: 100px;
+    width: 120%;
+    z-index: -1;
+    transform: translateX(2000px);
+    background-color: black;
+    transition: all linear 300ms;
+}
+.road{
+    height: 10px;
+    width: 80px;
+    left: 110vw;
+    background-color: white;
+    position: absolute;
+    bottom: 45px;
+    animation:  linear infinite 4000ms;
+}
+.road:nth-child(1){
+    animation-delay: 500ms;
+}
+.road:nth-child(2){
+    animation-delay: 1000ms;
+}
+.road:nth-child(3){
+    animation-delay: 1500ms;
+}
+.road:nth-child(4){
+    animation-delay: 2000ms;
+}
+.road:nth-child(5){
+    animation-delay: 2500ms;
+}
+.road:nth-child(6){
+    animation-delay: 3000ms;
+}
+.road:nth-child(7){
+    animation-delay: 3500ms;
+}
+.road:nth-child(8){
+    height: 130px;
+    left: 110vw;
+    background-color: transparent;
+    transform: skew(45deg) translateX(-70px);
+    background: url(images/Obstacle\ plant.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-delay: 4000ms;
+}
+.cloud{
+    position: absolute;
+    left: 110vw;
+    display: flex;
+    height: 100px;
+    width: 210px;
+    align-items: flex-end;  
+    animation: linear infinite 4s;
+}
+.cloud:nth-child(3){
+    animation-delay: 2s;
+    top: 40px;
+}
+.cloudSections{
+    background-color: whitesmoke;
+    width: 100%;
+}
+.cloudSections:nth-child(1){
+    border-radius: 5rem 0 0rem 5rem;
+    height: 60%;
+}
+.cloudSections:nth-child(2){
+    border-radius: 4rem 3rem 0rem 0rem;
+    height: 100%;
+}
+.cloudSections:nth-child(3){
+    border-radius: 0rem 5rem 5rem 0rem;
+    height: 70%;
+}
+.pauseScreen{
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+}
+.pauseScreen p:nth-child(1) {
+    font-size: 3rem;
+}
+.pauseScreen p:nth-child(3) {
+    font-size: 2rem;
+}
+.startgame{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100vh;
+    width: 40%;
+    position: fixed;
+    right: 0px;
+}
+.name{
+    text-align: center;
+}
+.startgame p:nth-child(1){
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.startgame p:nth-child(2){
+    font-size: 3rem;
+}
+.scoreText{
+    display: none;
+    z-index: 1;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
