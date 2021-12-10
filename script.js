@@ -2,7 +2,7 @@ let osCounter = 0;
 var playStatus = false;
 var gameOverStatus = false;
 var score = 0;
-var highScore=0;
+var highScore=1;
 var disDragonX , disDragonY , disObstacleX, disObstacleXAfter, disObstacleY;
 var clashInterval;
 var scoreStatus=0;
