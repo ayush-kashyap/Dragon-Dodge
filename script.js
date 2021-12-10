@@ -2,7 +2,7 @@ let osCounter = 0;
 var playStatus = false;
 var gameOverStatus = false;
 var score = 0;
-var highScore=1;
+var highScore=0;
 var disDragonX , disDragonY , disObstacleX, disObstacleXAfter, disObstacleY;
 var clashInterval;
 var scoreStatus=0;
@@ -38,6 +38,10 @@ function manJump(){
         }, 1000);
 }
 function playGame(){
+    var date = new Date();
+    date.setMonth(date.getMonth()+5);
+    var expires = "; expires=" + date.toGMTString();
+    document.cookie = "Highscore = " + highScore + expires + "; path=/";
     let highs = document.cookie.split('=');
     setTimeout(() => {
         clashInterval = setInterval(checkClash, 1);
