@@ -56,10 +56,10 @@ function playGame(){
     startGamePage.style.display="none";
     scoreText.style.display="block";
     highScoreText.style.display="block";
-    setInterval(() =>{highScoreBoard.innerHTML = highScore;}, 5000)
-    if(highs[1] != undefined){
+    setInterval(() =>{highScoreBoard.innerHTML = highScore;}, 4000)
+    setTimeout(() => {
         highScore = highs[1];
-    }
+    }, 5000);
     setInterval(() => {
         if(score > highScore){
             highScore = score;
