@@ -2,8 +2,10 @@ let osCounter = 0;
 var playStatus = false;
 var gameOverStatus = false;
 var score = 0;
+var highScore=0;
 var disDragonX , disDragonY , disObstacleX, disObstacleXAfter, disObstacleY;
 var clashInterval;
+var scoreStatus=0;
 const man = document.querySelector(".man");
 const obstacle = document.querySelector('.obstacle');
 const startGamePage = document.querySelector(".startgame");
@@ -12,17 +14,14 @@ const road = document.querySelectorAll(".road");
 const cloud = document.querySelectorAll(".cloud");
 const pause = document.querySelector(".pauseScreen");
 const scoreBoard = document.querySelector(".score");
+const highScoreBoard = document.querySelector(".highscore");
 const scoreText = document.querySelector(".scoreText");
+const highScoreText = document.querySelector(".highScoreText");
 const gamescreen = document.querySelector('.gamescreentext');
 const textedit = document.querySelector('.textedit');
 function manSlide(){
     man.src="images/slide.png";
         man.style.height="90px";
-        if(disDragonX <= 200){
-            setTimeout(() => {
-                score += 5;
-            }, 1000);
-        }
         setTimeout(() => {
             man.src="images/run.gif";
             man.style.height="150px";
@@ -32,12 +31,6 @@ function manJump(){
     man.classList.add("jump");
         man.src="images/jump.png";
         man.style.height="130px";
-        if(disObstacleX <= 200){
-            osCounter++;
-            setTimeout(() => {
-                score++;
-            }, 1000);
-        }
         setTimeout(() => {
             man.style.height="150px";
             man.src="images/run.gif";
@@ -45,8 +38,9 @@ function manJump(){
         }, 1000);
 }
 function playGame(){
+    let highs = document.cookie.split('=');
     setTimeout(() => {
-        clashInterval = setInterval(checkClash, 10);
+        clashInterval = setInterval(checkClash, 1);
     }, 1500);
     playStatus = true;
     man.src="images/run.gif";
@@ -61,6 +55,28 @@ function playGame(){
     }
     startGamePage.style.display="none";
     scoreText.style.display="block";
+    highScoreText.style.display="block";
+    setInterval(() =>{highScoreBoard.innerHTML = highScore;}, 5000)
+    highScore = highs[1];
+    setInterval(() => {
+        if(score > highScore){
+            highScore = score;
+        }
+        if(gameOverStatus){
+            gameOver();
+        }
+        if(scoreStatus == 1){
+            score++;
+            osCounter++;
+        }
+        if(scoreStatus == 5){
+            score+=5;
+        }
+        setTimeout(() => {
+            gameOverStatus = false;
+            scoreStatus= 0;
+        }, 200);
+    }, 200);
 }
 function pauseGame(){
     playStatus = false;
@@ -69,6 +85,7 @@ function pauseGame(){
     cloud[1].style.animationName="null";   
     pause.style.display="flex";
     scoreText.style.display="none";
+    highScoreText.style.display="none";
     gamescreen.innerHTML = "Game Paused";
     textedit.innerHTML = "resume";
     for(let i=0; i < road.length ; i++){
@@ -84,13 +101,20 @@ function gameOver(){
     pause.style.display="flex";
     man.style.left="10px";
     scoreText.style.display="none";
+    highScoreText.style.display="none";
     for(let i=0; i < road.length; i++){
         road[i].style.animationName="null";
     }
-    score=0;
-    osCounter=0;
+    setTimeout(() => {
+        score=0;
+        osCounter=0;
+    }, 2000);
     gamescreen.innerHTML = "Game Over";
     textedit.innerHTML = "replay";
+    var date = new Date();
+    date.setMonth(date.getMonth()+5);
+    var expires = "; expires=" + date.toGMTString();
+    document.cookie = "Highscore = " + highScore + expires + "; path=/";
     clearInterval(clashInterval);
 }
 function restartGame(){
@@ -107,6 +131,7 @@ function restartGame(){
     man.style.transition="none";
     startGamePage.style.display="flex";
     scoreText.style.display="none";
+    highScoreText.style.display="none";
     score=0;
     clearInterval(clashInterval);
 }
@@ -122,23 +147,26 @@ function checkClash(){
     disObstacleX = Math.abs((mX+147) - (oX-80));
     disObstacleXAfter = Math.abs((oX-80) - mX);
     disObstacleY = (mJumpY+ 50) - (175);
-    if(disDragonX <= 1 && disDragonY >= 1 ){
-        gameOverStatus = true;
-    }else if(disObstacleX <= 10 && disObstacleY <=1){
-        gameOverStatus = true;
-    }else if(disObstacleXAfter <= 20 && disObstacleY <=1){
+    if(disDragonX <= 5){
+        if(disDragonY >= 1){
+            gameOverStatus = true;
+        }else{
+            scoreStatus=5;
+        }
+    }
+    if(disObstacleX <= 10){
+        if(disObstacleY <=1){
+            gameOverStatus = true;
+        }else{
+            scoreStatus=1;
+        }
+    }
+    if(disObstacleXAfter <= 20 && disObstacleY <=1){
         gameOverStatus = true;
     }
     scoreBoard.innerHTML = score;
 }
-setInterval(() => {
-    if(gameOverStatus){
-        gameOver();
-    }
-    setTimeout(() => {
-        gameOverStatus = false;
-    }, 1000);
-}, 100);
+
 document.onkeydown = function (e){
         console.log(e.keyCode);
     if(e.keyCode == 40 && playStatus){
@@ -160,6 +188,9 @@ document.onkeydown = function (e){
     }
     if(e.keyCode==74){
         osCounter++
+    }
+    if(e.keyCode==73){
+        gameOver();
     }
     if (osCounter == 5) {
         

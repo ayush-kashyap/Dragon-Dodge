@@ -32,11 +32,15 @@ body{
     }
 }
 .dragon{
+    display: block !important;
     position: absolute;
-    height: 100px;
     bottom: 150px;
     left: 110vw;
+    height: 100px;
     animation: anime linear infinite 4000ms;
+}
+.drag{
+    display: none;
 }
 @keyframes anime{
     from{
@@ -177,5 +181,12 @@ body{
     z-index: 1;
     position: absolute;
     right: 10px;
+    top: 0px;
+}
+.highScoreText{
+    display: none;
+    z-index: 1;
+    position: absolute;
+    left: 10px;
     top: 0px;
 }
