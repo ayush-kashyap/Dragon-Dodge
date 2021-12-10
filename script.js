@@ -57,7 +57,9 @@ function playGame(){
     scoreText.style.display="block";
     highScoreText.style.display="block";
     setInterval(() =>{highScoreBoard.innerHTML = highScore;}, 5000)
-    highScore = highs[1];
+    if(highs[1] != undefined){
+        highScore = highs[1];
+    }
     setInterval(() => {
         if(score > highScore){
             highScore = score;
